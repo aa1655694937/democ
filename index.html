@@ -3,21 +3,265 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Title</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0
+    }
+
+    ul,
+    li {
+      list-style: none
+    }
+
+    li {
+      text-align: center;
+      line-height: 99px;
+      width: 99px;
+      height: 99px;
+      border-right: 1px solid red;
+      border-bottom: 1px solid red
+    }
+
+    div {
+      width: 300px;
+      height: 300px;
+      border: 1px solid red;
+      position: relative
+    }
+
+    li:nth-child(4) {
+      position: absolute;
+      bottom: 0;
+      left: 100px;
+    }
+
+    li:nth-child(5) {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+
+    li:nth-child(6) {
+      position: absolute;
+      top: 100px;
+      right: 0;
+    }
+
+    li:nth-child(7) {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    li:nth-child(8) {
+      position: absolute;
+      top: 0;
+      right: 100px;
+    }
+
+    li:nth-child(9) {
+      position: absolute;
+      top: 100px;
+      right: 100px;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .jiang {
+      background: red;
+      color: blue;
+    }
+  </style>
 </head>
-<style>
-  h2 {
-    border: 1px solid red;
-  }
-</style>
 
 <body>
-  <h2>Hello,蒋一飞</h2>
-  <h1>YYDS</h1>
-</body>
-<script>
+  <form action="" name="myform">
+    姓名：<input type="text" name="user" value="" placeholder="请输入姓名">
+    年龄：<input type="text" name="age" placeholder="请输入年龄">
+    手机号：<input type="text" name="tel" value="" placeholder="请输入手机号">
+    <input type="button" value="提交" name="btn">
+  </form>
+  <div>
+    <ul>
+      <li class="list">一等奖</li>
+      <li class="list">二等奖</li>
+      <li class="list">三等奖</li>
+      <li class="list">四等奖</li>
+      <li class="list">五等奖</li>
+      <li class="list">六等奖</li>
+      <li class="list">七等奖</li>
+      <li class="list">八等奖</li>
+      <li class="jiang">开始抽奖</li>
+    </ul>
+  </div>
+  <table border="1" cellspacing="0" cellpadding="10">
+    <tr>
+      <th>姓名</th>
+      <th>年龄</th>
+      <th>电话</th>
+      <th>中奖</th>
+    </tr>
+  </table>
+  <script>
+    var myform = document.myform;   //直接获取name名称为myform的表单
+    var user = myform.user;    //表单对象.name名称；
+    var age = myform.age;
+    var tel = myform.tel;
+    var btn = myform.btn;
+    var xm, nl, sjh;
+    var a, b, c;
+    var jiang = document.getElementsByClassName("jiang")[0];
+    var li = document.getElementsByClassName("list");
+    user.onblur = function () {
+      xm = user.value;  //姓名里面的内容
+      //  var reg=/^[A-Za-z0-9]{6,18}$/;   //正则
+      //  a=reg.test(xm);
+      if (xm == "") {
+        return alert("用户名不能为空")
+      } else if (a != true) {
+        return
+        alert("不符合要求，重新填写")
+      }
+      if (a == true && b == true && c == true) {
+        jiang.innerHTML = "抽奖";
+      }
 
-</script>
+
+    }
+    age.onblur = function () {
+      nl = age.value;  //姓名里面的内容
+      var reg = /^[1][8-9]$|^[2-7][0-9]$|^80$/;   //正则
+      b = reg.test(nl);
+      if (nl == "") {
+        //  alert("年龄不能为空")
+        return
+      } else if (b != true) {
+        return
+        alert("不符合要求，重新填写")
+        //  age.value=""
+      }
+      if (a == true && b == true && c == true) {
+        jiang.innerHTML = "抽奖";
+      }
+
+
+    }
+    tel.onblur = function () {
+      sjh = tel.value;  //姓名里面的内容
+      var reg = /^[1][35789][0-9]{9}$/;   //正则
+      c = reg.test(sjh)
+      if (sjh == "") {
+        return
+      } else if (c != true) {
+        return
+        alert("不符合要求，重新填写")
+        //  tel.value=""
+      }
+      if (a == true && b == true && c == true) {
+        jiang.innerHTML = "抽奖";
+      }
+
+    }
+
+    var j = 0;
+    btn.onclick = function () {
+      if (user.value == "" || age.value == "" || tel.value == "") {
+        alert('不符合要求，重新填写')
+      } else {
+        jiang.onclick = function () {
+          t = setInterval(move, 100);
+          function move() {
+            for (var i = 0; i < li.length; i++) {
+              li[i].style.background = "white";
+            }
+            li[j].style.background = "aqua";
+            j++;
+            if (j >= 8) {
+              j = 0;
+            }
+          }
+          setTimeout(function () {
+            clearInterval(t);
+            var tr = document.createElement("tr");
+            var jiangpin = li[j - 1].innerHTML;
+            tr.innerHTML = "<td>" + xm + "</td><td>" + nl + "</td><td>" + sjh + "</td><td>" + jiangpin + "</td>";
+            var table = document.getElementsByTagName("table")[0];
+            table.appendChild(tr);
+          }, 3000)
+        }
+
+      }
+
+
+    }
+
+
+  </script>
+  <script>
+
+    console.log(
+      "%cDo you have a dream?",
+      `background: rgba(252,234,187,1);
+  background: -moz-linear-gradient(left, #fad0c4 0%, #ff9a9e 12%, #ff9a9e 28%, #fecfef 39%,rgba(0,189,247,1) 51%, rgba(133,108,217,1) 64%, rgba(177,0,247,1) 78%, rgba(247,0,189,1) 87%, rgba(245,22,52,1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(252,234,187,1)), color-stop(12%, rgba(175,250,77,1)), color-stop(28%, rgba(0,247,49,1)), color-stop(39%, rgba(0,210,247,1)), color-stop(51%, rgba(0,189,247,1)), color-stop(64%, rgba(133,108,217,1)), color-stop(78%, rgba(177,0,247,1)), color-stop(87%, rgba(247,0,189,1)), color-stop(100%, rgba(245,22,52,1)));
+  background: -webkit-linear-gradient(left, rgba(252,234,187,1) 0%, rgba(175,250,77,1) 12%, rgba(0,247,49,1) 28%, rgba(0,210,247,1) 39%, rgba(0,189,247,1) 51%, rgba(133,108,217,1) 64%, rgba(177,0,247,1) 78%, rgba(247,0,189,1) 87%, rgba(245,22,52,1) 100%);
+  background: -o-linear-gradient(left,    rgba(252,234,187,1) 0%, rgba(175,250,77,1) 12%, rgba(0,247,49,1) 28%, rgba(0,210,247,1) 39%, rgba(0,189,247,1) 51%, rgba(133,108,217,1) 64%, rgba(177,0,247,1) 78%, rgba(247,0,189,1) 87%, rgba(245,22,52,1) 100%);
+  background: -ms-linear-gradient(left, rgba(252,234,187,1) 0%, rgba(175,250,77,1) 12%, rgba(0,247,49,1) 28%, rgba(0,210,247,1) 39%, rgba(0,189,247,1) 51%, rgba(133,108,217,1) 64%, rgba(177,0,247,1) 78%, rgba(247,0,189,1) 87%, rgba(245,22,52,1) 100%);
+  background: linear-gradient(30deg, #fad0c4 0%,#ff9a9e 12%,  #ff9a9e  28%, #fda085 39%, #f6d365 51%, #d4fc79 64%, #84fab0 78%, #8fd3f4 87%, #38f9d7 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fceabb', endColorstr='#f51634', GradientType=1 );font-size:7.2em;padding-left:.6em;padding-right:.6em`
+    );
+    console.log(
+      `
+                                        $,  $,     ,
+                                        "ss.$ss. .s’
+                                ,     .ss$$$$$$$$$$s,
+                                $. s$$$$$$$$$$$$$$"$$Ss
+                                "$$$$$$$$$$$$$$$$$$o$$$       ,
+                               s$$$$$$$$$$$$$$$$$$$$$$$$s,  ,s
+                              s$$$$$$$$$"$$$$$$""""$$$$$$"$$$$$,
+                              s$$$$$$$$$$s""$$$$ssssss"$$$$$$$$”
+                             s$$$$$$$$$$'         """"ss"$"$s"”
+                             s$$$$$$$$$$,              """"""$  .s$$s
+                             s$$$$$$$$$$$$s,...               "s$$'  "
+                         "ssss$$$$$$$$$$$$$$$$$$$$####s.     .$$"$.   , s-
+                           '""""$$$$$$$$$$$$$$$$$$$$#####$$$$$$"     $.$’
+                                 "$$$$$$$$$$$$$$$$$$$$$####s""     .$$$|
+                                  "$$$$$$$$$$$$$$$$$$$$$$$$##s    .$$" $
+                                   $$""$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"   "
+                                  $$"  "$"$$$$$$$$$$$$$$$$$$$$S""""’
+                             ,   ,"     '  $$$$$$$$$$$$$$$$####s
+                             $.          .s$$$$$$$$$$$$$$$$$####”
+                 ,           "$s.   ..ssS$$$$$$$$$$$$$$$$$$$####”
+                 $           .$$$S$$$$$$$$$$$$$$$$$$$$$$$$#####”
+                 Ss     ..sS$$$$$$$$$$$$$$$$$$$$$$$$$$$######"”
+                  "$$sS$$$$$$$$$$$$$$$$$$$$$$$$$$$########”
+           ,      s$$$$$$$$$$$$$$$$$$$$$$$$#########""’ 
+           $    s$$$$$$$$$$$$$$$$$$$$$#######""'      s'         ,
+           $$..$$$$$$$$$$$$$$$$$$######"'       ....,$$....    ,$
+            "$$$$$$$$$$$$$$$######"' ,     .sS$$$$$$$$$$$$$$$$s$$
+              $$$$$$$$$$$$#####"     $, .s$$$$$$$$$$$$$$$$$$$$$$$$s.
+   )          $$$$$$$$$$$#####'        "$$$$$$$$$###########$$$$$$$$$$$.
+  ((          $$$$$$$$$$$#####       $$$$$$$$###"       "####$$$$$$$$$$
+  ) \         $$$$$$$$$$$$####.     $$$$$$###"             "###$$$$$$$$$   s’
+ (   )        $$$$$$$$$$$$$####.   $$$$$###"                ####$$$$$$$$s$$’
+ )  ( (       $$"$$$$$$$$$$$#####.$$$$$###'                .###$$$$$$$$$$”
+ (  )  )   _,$"   $$$$$$$$$$$$######.$$##'                .###$$$$$$$$$$
+ ) (  ( \.         "$$$$$$$$$$$$$#######,,,.          ..####$$$$$$$$$$$”
+(   )$ )  )        ,$$$$$$$$$$$$$$$$$$####################$$$$$$$$$$$”
+(   ($$  ( \     _sS"  ""$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$S$$,
+ )  )$$$s ) )  .      .   "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"'  "$$
+  (   $$$Ss/  .$,    .$,,s$$$$$$##S$$$$$$$$$$$$$$$$$$$$$$$$S""        ‘
+    \)_$$$$$$$$$$$$$$$$$$$$$$$##"  $$        "$$.        "$$.
+        ""S$$$$$$$$$$$$$$$$$#"      $          '$          '$
+            '"""""""""""""'         '           '           '
+`
+    );
+  </script>
+</body>
+
 </html>
